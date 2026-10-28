@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netlynk Technologies | Enterprise IT Hardware & Infrastructure</title>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --bg-light: #f8fafc;
+            --text-main: #334155;
+            --border-color: #e2e8f0;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        body { color: var(--text-main); line-height: 1.6; background-color: #fff; }
+        
+        /* Header */
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; background: #fff; z-index: 100; }
+        .logo { font-size: 1.25rem; font-weight: 700; color: var(--primary); letter-spacing: -0.5px; }
+        nav a { margin-left: 24px; text-decoration: none; color: var(--text-main); font-weight: 500; font-size: 0.95rem; }
+        nav a:hover { color: var(--accent); }
+        .nav-cta { background: var(--accent); color: #fff !important; padding: 8px 16px; border-radius: 6px; }
+        .nav-cta:hover { background: var(--accent-hover); }
+
+        /* Hero Section */
+        .hero { padding: 80px 5% 60px; background: var(--bg-light); text-align: center; }
+        .hero h1 { font-size: 2.75rem; color: var(--primary); max-width: 800px; margin: 0 auto 20px; letter-spacing: -1px; }
+        .hero p { font-size: 1.15rem; color: var(--text-main); max-width: 650px; margin: 0 auto 30px; }
+        .hero-buttons { display: flex; justify-content: center; gap: 16px; }
+        .btn-primary { background: var(--accent); color: #fff; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; }
+        .btn-primary:hover { background: var(--accent-hover); }
+        .btn-secondary { background: #fff; color: var(--primary); border: 1px solid var(--border-color); padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; }
+        .btn-secondary:hover { border-color: var(--primary); }
+
+        /* Hardware Categories */
+        .section { padding: 70px 5%; }
+        .section-title { text-align: center; margin-bottom: 40px; }
+        .section-title h2 { font-size: 2rem; color: var(--primary); letter-spacing: -0.5px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; max-width: 1100px; margin: 0 auto; }
+        .card { background: #fff; border: 1px solid var(--border-color); padding: 24px; border-radius: 8px; transition: transform 0.2s; }
+        .card:hover { transform: translateY(-3px); border-color: var(--accent); }
+        .card h3 { font-size: 1.1rem; color: var(--primary); margin-bottom: 10px; }
+        .card p { font-size: 0.95rem; color: #64748b; }
+
+        /* Broker Advantage */
+        .broker-banner { background: var(--primary); color: #fff; padding: 60px 5%; text-align: center; }
+        .broker-banner h2 { font-size: 2rem; margin-bottom: 16px; }
+        .broker-banner p { color: #94a3b8; max-width: 700px; margin: 0 auto 30px; font-size: 1.05rem; }
+        
+        /* Consulting Section (Secondary) */
+        .consulting { background: var(--bg-light); border-top: 1px solid var(--border-color); }
+
+        /* Footer */
+        footer { padding: 40px 5%; border-top: 1px solid var(--border-color); text-align: center; color: #64748b; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">Netlynk Technologies</div>
+        <nav>
+            <a href="#hardware">Hardware Supply</a>
+            <a href="#brokers">Broker Network</a>
+            <a href="#consulting">RevOps Consulting</a>
+            <a href="#contact" class="nav-cta">Request Quote</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Enterprise IT Infrastructure, Sourced & Delivered.</h1>
+        <p>Netlynk Technologies bridges the supply chain gap across North America. We supply high-demand enterprise servers, networking gear, and critical components to businesses and trusted broker networks with rapid fulfillment.</p>
+        <div class="hero-buttons">
+            <a href="#contact" class="btn-primary">Request Hardware Quote</a>
+            <a href="#brokers" class="btn-secondary">Submit Stock / Broker Partner</a>
+        </div>
+    </section>
+
+    <!-- Hardware Categories -->
+    <section class="section" id="hardware">
+        <div class="section-title">
+            <h2>Core Hardware Capabilities</h2>
+            <p style="color: #64748b; margin-top: 8px;">High-demand enterprise components for data centers and IT fleets.</p>
+        </div>
+        <div class="grid">
+            <div class="card">
+                <h3>Servers & Compute</h3>
+                <p>Rackmount servers, enterprise chassis, and hardware configurations built for heavy enterprise workloads.</p>
+            </div>
+            <div class="card">
+                <h3>Networking Gear</h3>
+                <p>Core switches, enterprise routers, firewalls, and wireless access points from leading infrastructure brands.</p>
+            </div>
+            <div class="card">
+                <h3>Storage & Memory</h3>
+                <p>High-capacity enterprise SSDs, DDR memory/RAM modules, and performance processor upgrades.</p>
+            </div>
+            <div class="card">
+                <h3>Workstation Fleets</h3>
+                <p>High-performance corporate laptops and desktop workstations tailored for engineering and development teams.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Broker Advantage Banner -->
+    <section class="broker-banner" id="brokers">
+        <h2>Built for High-Stakes IT Trade & Supply Chains</h2>
+        <p>Operating fluidly across wholesale networks, ITAD channels, and platforms like BrokerBin. We specialize in back-to-back fulfillment, reciprocal stock-list swapping, and rapid cross-broker execution.</p>
+        <a href="#contact" class="btn-primary" style="background: #fff; color: var(--primary);">Connect Your Stock List</a>
+    </section>
+
+    <!-- Secondary Section: Consulting -->
+    <section class="section consulting" id="consulting">
+        <div class="section-title">
+            <h2>Infrastructure-Grade Systems & RevOps Automation</h2>
+            <p style="color: #64748b; margin-top: 8px;">Specialized B2B consulting services for scaling technology companies.</p>
+        </div>
+        <div class="grid" style="max-width: 800px;">
+            <div class="card" style="background: #fff;">
+                <h3>HubSpot Architecture</h3>
+                <p>Custom CRM setup, pipeline automation, and data structure design tailored for complex B2B sales cycles.</p>
+            </div>
+            <div class="card" style="background: #fff;">
+                <h3>Outbound & RevOps Workflows</h3>
+                <p>Automated lead routing, enrichment pipelines, and Make.com integrations to eliminate administrative bloat.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Netlynk Technologies Inc. All rights reserved. Calgary, Alberta, Canada.</p>
+    </footer>
+
+</body>
+</html>
