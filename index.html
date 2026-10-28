@@ -126,17 +126,12 @@
             <nav class="hidden lg:flex items-center space-x-7">
                 <a href="#hardware-matrix" class="text-sm font-medium text-slate-600 hover:text-cobalt transition">Infrastructure Hardware</a>
                 <a href="#broker-desk" class="text-sm font-medium text-slate-600 hover:text-cobalt transition">Broker & Wholesale Desk</a>
-                <a href="#sku-terminal" class="text-sm font-medium text-slate-600 hover:text-cobalt transition">BOM / SKU Lookup</a>
+                <a href="#sku-terminal" class="text-sm font-medium text-slate-600 hover:text-cobalt transition">Enterprise SKU Catalog</a>
                 <a href="#revops-architecture" class="text-sm font-medium text-slate-600 hover:text-cobalt transition">RevOps Architecture</a>
             </nav>
 
             <!-- Action Controls -->
             <div class="hidden sm:flex items-center space-x-3">
-                <button onclick="scrollToPortal('rfq')" class="relative bg-alabaster hover:bg-slate-100 text-slateDark border border-slate-300 text-xs font-mono-tech font-medium px-3.5 py-2.5 rounded-lg transition flex items-center space-x-2">
-                    <i class="fa-solid fa-layer-group text-cobalt"></i>
-                    <span>Active BOM</span>
-                    <span id="nav-bom-count" class="bg-cobalt text-white text-[10px] px-1.5 py-0.2 rounded-full font-bold">2</span>
-                </button>
                 <button onclick="scrollToPortal('rfq')" class="bg-cobalt hover:bg-cobaltHover text-white text-sm font-semibold px-5 py-2.5 rounded-lg shadow-sm transition flex items-center space-x-2">
                     <span>Submit RFQ / Stock List</span>
                     <i class="fa-solid fa-arrow-right text-xs"></i>
@@ -153,7 +148,7 @@
         <div id="mobile-nav" class="hidden lg:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-6 space-y-3">
             <a href="#hardware-matrix" onclick="toggleMobileNav()" class="block text-sm font-medium text-slate-700 py-2 border-b border-slate-100">Infrastructure Hardware</a>
             <a href="#broker-desk" onclick="toggleMobileNav()" class="block text-sm font-medium text-slate-700 py-2 border-b border-slate-100">Broker & Wholesale Desk</a>
-            <a href="#sku-terminal" onclick="toggleMobileNav()" class="block text-sm font-medium text-slate-700 py-2 border-b border-slate-100">BOM / SKU Lookup</a>
+            <a href="#sku-terminal" onclick="toggleMobileNav()" class="block text-sm font-medium text-slate-700 py-2 border-b border-slate-100">Enterprise SKU Catalog</a>
             <a href="#revops-architecture" onclick="toggleMobileNav()" class="block text-sm font-medium text-slate-700 py-2 border-b border-slate-100">RevOps Architecture</a>
             <div class="pt-2 flex flex-col space-y-2">
                 <button onclick="toggleMobileNav(); scrollToPortal('rfq')" class="w-full bg-cobalt text-white text-sm font-semibold py-2.5 rounded-lg shadow-sm">
@@ -217,7 +212,7 @@
                     </div>
                 </div>
 
-                <!-- Right Column: Interactive Quick BOM & SKU Availability Terminal -->
+                <!-- Right Column: Enterprise SKU Availability Catalog -->
                 <div id="sku-terminal" class="lg:col-span-5">
                     <div class="bg-obsidian rounded-xl border border-slate-800 shadow-2xl overflow-hidden text-slate-200">
                         <!-- Terminal Header -->
@@ -226,7 +221,7 @@
                                 <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80"></span>
                                 <span class="w-2.5 h-2.5 rounded-full bg-amber-400/80"></span>
                                 <span class="w-2.5 h-2.5 rounded-full bg-emeraldStatus/80"></span>
-                                <span class="text-xs font-mono-tech text-slate-300 ml-2 font-medium">BOM_SKU_TERMINAL // v2.6</span>
+                                <span class="text-xs font-mono-tech text-slate-300 ml-2 font-medium">ENTERPRISE_SKU_CATALOG</span>
                             </div>
                             <span class="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-emeraldStatus/10 text-emeraldStatus border border-emeraldStatus/30">
                                 LIVE ALLOCATION FEED
@@ -235,82 +230,59 @@
 
                         <!-- Terminal Body -->
                         <div class="p-5 space-y-4">
-                            <div>
-                                <label class="block text-[11px] font-mono-tech uppercase text-slate-400 mb-1.5">
-                                    Add Part Number / SKU or Hardware Spec to Quote Queue:
-                                </label>
-                                <div class="flex space-x-2">
-                                    <input type="text" id="custom-sku-input" placeholder="e.g., C9300-48P-A or Dell R760 24xNVMe" class="flex-1 bg-slateDark border border-slate-700 rounded-lg px-3.5 py-2 text-xs font-mono-tech text-white placeholder-slate-500 focus:outline-none focus:border-cobalt">
-                                    <input type="number" id="custom-sku-qty" value="5" min="1" max="999" class="w-16 bg-slateDark border border-slate-700 rounded-lg px-2.5 py-2 text-xs font-mono-tech text-white text-center focus:outline-none focus:border-cobalt" title="Quantity">
-                                    <button onclick="addCustomSkuFromTerminal()" class="bg-cobalt hover:bg-cobaltHover text-white px-3.5 py-2 rounded-lg text-xs font-mono-tech font-semibold transition whitespace-nowrap">
-                                        + Add
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Quick-Select Sample High-Velocity SKUs -->
+                            <!-- Sample High-Velocity SKUs -->
                             <div>
                                 <div class="flex items-center justify-between text-[11px] font-mono-tech text-slate-400 mb-2">
-                                    <span>HIGH-VELOCITY ENTERPRISE SKUs (CLICK TO ADD):</span>
+                                    <span>HIGH-VELOCITY ENTERPRISE SKUs:</span>
                                     <span class="text-slate-500">CHANNEL STATUS</span>
                                 </div>
                                 <div class="space-y-1.5 max-h-48 overflow-y-auto terminal-scroll pr-1">
-                                    <button onclick="addPresetSku('Dell PowerEdge R760 (2U CTO / Dual Xeon)', 'SERVER-CTO', 4)" class="w-full text-left bg-slateDark/90 hover:bg-slate-800/90 border border-slate-800 hover:border-slate-600 rounded-lg px-3 py-2 transition flex items-center justify-between group">
+                                    <button onclick="scrollToPortal('rfq')" class="w-full text-left bg-slateDark/90 hover:bg-slate-800/90 border border-slate-800 hover:border-slate-600 rounded-lg px-3 py-2 transition flex items-center justify-between group">
                                         <div>
                                             <div class="text-xs font-mono-tech font-medium text-white group-hover:text-blue-400 transition">Dell PowerEdge R760 2U Chassis</div>
                                             <div class="text-[10px] font-mono-tech text-slate-400">SKU: DELL-R760-CTO • Dual Socket / 24x NVMe</div>
                                         </div>
-                                        <span class="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-emeraldStatus/10 text-emeraldStatus border border-emeraldStatus/20">+ Quote (4)</span>
+                                        <span class="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-emeraldStatus/10 text-emeraldStatus border border-emeraldStatus/20">Request Quote</span>
                                     </button>
 
-                                    <button onclick="addPresetSku('Cisco Catalyst C9300-48P-A Switch', 'NET-SWITCH', 10)" class="w-full text-left bg-slateDark/90 hover:bg-slate-800/90 border border-slate-800 hover:border-slate-600 rounded-lg px-3 py-2 transition flex items-center justify-between group">
+                                    <button onclick="scrollToPortal('rfq')" class="w-full text-left bg-slateDark/90 hover:bg-slate-800/90 border border-slate-800 hover:border-slate-600 rounded-lg px-3 py-2 transition flex items-center justify-between group">
                                         <div>
                                             <div class="text-xs font-mono-tech font-medium text-white group-hover:text-blue-400 transition">Cisco Catalyst C9300-48P-A</div>
                                             <div class="text-[10px] font-mono-tech text-slate-400">SKU: C9300-48P-A • 48-Port PoE+ Network Advantage</div>
                                         </div>
-                                        <span class="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-emeraldStatus/10 text-emeraldStatus border border-emeraldStatus/20">+ Quote (10)</span>
+                                        <span class="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-emeraldStatus/10 text-emeraldStatus border border-emeraldStatus/20">Request Quote</span>
                                     </button>
 
-                                    <button onclick="addPresetSku('Samsung PM1733 3.84TB U.2 NVMe SSD', 'STORAGE-NVME', 24)" class="w-full text-left bg-slateDark/90 hover:bg-slate-800/90 border border-slate-800 hover:border-slate-600 rounded-lg px-3 py-2 transition flex items-center justify-between group">
+                                    <button onclick="scrollToPortal('rfq')" class="w-full text-left bg-slateDark/90 hover:bg-slate-800/90 border border-slate-800 hover:border-slate-600 rounded-lg px-3 py-2 transition flex items-center justify-between group">
                                         <div>
                                             <div class="text-xs font-mono-tech font-medium text-white group-hover:text-blue-400 transition">Samsung PM1733 3.84TB Gen4 NVMe</div>
                                             <div class="text-[10px] font-mono-tech text-slate-400">SKU: MZWLJ3T8HBLS-00007 • 2.5" U.2 Enterprise SSD</div>
                                         </div>
-                                        <span class="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-emeraldStatus/10 text-emeraldStatus border border-emeraldStatus/20">+ Quote (24)</span>
+                                        <span class="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-emeraldStatus/10 text-emeraldStatus border border-emeraldStatus/20">Request Quote</span>
                                     </button>
 
-                                    <button onclick="addPresetSku('HPE ProLiant DL380 Gen11 8SFF', 'SERVER-HPE', 2)" class="w-full text-left bg-slateDark/90 hover:bg-slate-800/90 border border-slate-800 hover:border-slate-600 rounded-lg px-3 py-2 transition flex items-center justify-between group">
+                                    <button onclick="scrollToPortal('rfq')" class="w-full text-left bg-slateDark/90 hover:bg-slate-800/90 border border-slate-800 hover:border-slate-600 rounded-lg px-3 py-2 transition flex items-center justify-between group">
                                         <div>
                                             <div class="text-xs font-mono-tech font-medium text-white group-hover:text-blue-400 transition">HPE ProLiant DL380 Gen11 2U</div>
                                             <div class="text-[10px] font-mono-tech text-slate-400">SKU: P52534-B21 • 4th Gen Xeon Scalable</div>
                                         </div>
-                                        <span class="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-emeraldStatus/10 text-emeraldStatus border border-emeraldStatus/20">+ Quote (2)</span>
+                                        <span class="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-emeraldStatus/10 text-emeraldStatus border border-emeraldStatus/20">Request Quote</span>
                                     </button>
 
-                                    <button onclick="addPresetSku('Micron 64GB DDR5-4800 ECC RDIMM', 'MEM-DDR5', 32)" class="w-full text-left bg-slateDark/90 hover:bg-slate-800/90 border border-slate-800 hover:border-slate-600 rounded-lg px-3 py-2 transition flex items-center justify-between group">
+                                    <button onclick="scrollToPortal('rfq')" class="w-full text-left bg-slateDark/90 hover:bg-slate-800/90 border border-slate-800 hover:border-slate-600 rounded-lg px-3 py-2 transition flex items-center justify-between group">
                                         <div>
                                             <div class="text-xs font-mono-tech font-medium text-white group-hover:text-blue-400 transition">Micron 64GB DDR5-4800 ECC RDIMM</div>
                                             <div class="text-[10px] font-mono-tech text-slate-400">SKU: MTC40F2046S1RC48BA1 • Server Registered RAM</div>
                                         </div>
-                                        <span class="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-emeraldStatus/10 text-emeraldStatus border border-emeraldStatus/20">+ Quote (32)</span>
+                                        <span class="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-emeraldStatus/10 text-emeraldStatus border border-emeraldStatus/20">Request Quote</span>
                                     </button>
                                 </div>
                             </div>
 
-                            <!-- Active BOM Queue Preview -->
-                            <div class="bg-slateDark border border-slate-800 rounded-lg p-3">
-                                <div class="flex items-center justify-between text-[11px] font-mono-tech text-slate-400 mb-2">
-                                    <span>ACTIVE QUOTE STAGING QUEUE:</span>
-                                    <button onclick="clearBomQueue()" class="text-rose-400 hover:text-rose-300 text-[10px] underline">Clear All</button>
-                                </div>
-                                <div id="terminal-bom-list" class="space-y-1.5 max-h-28 overflow-y-auto terminal-scroll text-xs font-mono-tech">
-                                    <!-- Populated by JS -->
-                                </div>
-                                <button onclick="scrollToPortal('rfq')" class="mt-3 w-full bg-cobalt hover:bg-cobaltHover text-white font-mono-tech text-xs font-semibold py-2.5 rounded-md transition flex items-center justify-center space-x-2">
-                                    <span>Proceed to Formal RFQ Dispatch</span>
-                                    <i class="fa-solid fa-chevron-right text-[10px]"></i>
-                                </button>
-                            </div>
+                            <button onclick="scrollToPortal('rfq')" class="w-full bg-cobalt hover:bg-cobaltHover text-white font-mono-tech text-xs font-semibold py-2.5 rounded-md transition flex items-center justify-center space-x-2">
+                                <span>Request a Hardware Quote</span>
+                                <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -412,8 +384,8 @@
                     </div>
                     <div class="pt-4 border-t border-slate-200 flex items-center justify-between">
                         <span class="text-[11px] font-mono-tech text-slate-500">New Retail / Certified Refurb</span>
-                        <button onclick="addPresetSku('Enterprise Server / CTO Rackmount Requirement', 'CAT-COMPUTE', 1); scrollToPortal('rfq')" class="text-xs font-mono-tech font-semibold text-cobalt hover:text-cobaltHover flex items-center space-x-1.5">
-                            <span>+ Add Category to RFQ</span>
+                        <button onclick="scrollToPortal('rfq')" class="text-xs font-mono-tech font-semibold text-cobalt hover:text-cobaltHover flex items-center space-x-1.5">
+                            <span>Request a Quote</span>
                             <i class="fa-solid fa-arrow-right text-[10px]"></i>
                         </button>
                     </div>
@@ -443,8 +415,8 @@
                     </div>
                     <div class="pt-4 border-t border-slate-200 flex items-center justify-between">
                         <span class="text-[11px] font-mono-tech text-slate-500">Bypass 8+ Wk OEM Lead Times</span>
-                        <button onclick="addPresetSku('Enterprise Networking / Switch / Firewall Requirement', 'CAT-NETWORK', 1); scrollToPortal('rfq')" class="text-xs font-mono-tech font-semibold text-cobalt hover:text-cobaltHover flex items-center space-x-1.5">
-                            <span>+ Add Category to RFQ</span>
+                        <button onclick="scrollToPortal('rfq')" class="text-xs font-mono-tech font-semibold text-cobalt hover:text-cobaltHover flex items-center space-x-1.5">
+                            <span>Request a Quote</span>
                             <i class="fa-solid fa-arrow-right text-[10px]"></i>
                         </button>
                     </div>
@@ -474,8 +446,8 @@
                     </div>
                     <div class="pt-4 border-t border-slate-200 flex items-center justify-between">
                         <span class="text-[11px] font-mono-tech text-slate-500">Matched Lot Codes Available</span>
-                        <button onclick="addPresetSku('Enterprise NVMe SSD / Server DDR4-DDR5 RAM Lot', 'CAT-COMPONENTS', 20); scrollToPortal('rfq')" class="text-xs font-mono-tech font-semibold text-cobalt hover:text-cobaltHover flex items-center space-x-1.5">
-                            <span>+ Add Category to RFQ</span>
+                        <button onclick="scrollToPortal('rfq')" class="text-xs font-mono-tech font-semibold text-cobalt hover:text-cobaltHover flex items-center space-x-1.5">
+                            <span>Request a Quote</span>
                             <i class="fa-solid fa-arrow-right text-[10px]"></i>
                         </button>
                     </div>
@@ -505,8 +477,8 @@
                     </div>
                     <div class="pt-4 border-t border-slate-200 flex items-center justify-between">
                         <span class="text-[11px] font-mono-tech text-slate-500">MOQ 10+ Units / Fleet Pricing</span>
-                        <button onclick="addPresetSku('Corporate Workstation / Commercial Laptop Fleet', 'CAT-FLEET', 15); scrollToPortal('rfq')" class="text-xs font-mono-tech font-semibold text-cobalt hover:text-cobaltHover flex items-center space-x-1.5">
-                            <span>+ Add Category to RFQ</span>
+                        <button onclick="scrollToPortal('rfq')" class="text-xs font-mono-tech font-semibold text-cobalt hover:text-cobaltHover flex items-center space-x-1.5">
+                            <span>Request a Quote</span>
                             <i class="fa-solid fa-arrow-right text-[10px]"></i>
                         </button>
                     </div>
@@ -629,7 +601,7 @@
                             </div>
                             <div class="bg-obsidian/80 border border-slate-800 p-4 rounded-lg">
                                 <div class="text-xs font-mono-tech text-emeraldStatus font-semibold mb-1">STEP 02 // DEMAND MATCH</div>
-                                <div class="text-sm font-bold text-white mb-1">Active BOM Indexing</div>
+                                <div class="text-sm font-bold text-white mb-1">Inventory Demand Matching</div>
                                 <p class="text-xs text-slate-400">We index your SKUs into our internal sourcing table for immediate matching against client RFQs.</p>
                             </div>
                             <div class="bg-obsidian/80 border border-slate-800 p-4 rounded-lg">
@@ -1005,86 +977,6 @@
 
     <!-- Interactive Application Logic -->
     <script>
-        // Initial BOM Queue State
-        let bomQueue = [
-            { sku: 'Dell PowerEdge R760 (2U CTO / Dual Xeon)', code: 'SERVER-CTO', qty: 4 },
-            { sku: 'Samsung PM1733 3.84TB U.2 NVMe SSD', code: 'STORAGE-NVME', qty: 24 }
-        ];
-
-        // Render BOM Queue in Hero Terminal & Sync with Form Textarea
-        function renderBomQueue() {
-            const listContainer = document.getElementById('terminal-bom-list');
-            const navBadge = document.getElementById('nav-bom-count');
-            const rfqTextarea = document.getElementById('rfq-bom-textarea');
-
-            navBadge.textContent = bomQueue.length;
-
-            if (bomQueue.length === 0) {
-                listContainer.innerHTML = `<div class="text-slate-500 py-2 text-center">No SKUs queued. Click any part above or type a custom SKU.</div>`;
-                rfqTextarea.value = '';
-                return;
-            }
-
-            listContainer.innerHTML = bomQueue.map((item, idx) => `
-                <div class="flex items-center justify-between bg-obsidian px-2.5 py-1.5 rounded border border-slate-800">
-                    <div class="truncate pr-2">
-                        <span class="text-emeraldStatus font-semibold">[QTY: ${item.qty}]</span>
-                        <span class="text-slate-200 ml-1">${item.sku}</span>
-                    </div>
-                    <button type="button" onclick="removeBomItem(${idx})" class="text-slate-500 hover:text-rose-400 ml-2 shrink-0" title="Remove">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                </div>
-            `).join('');
-
-            // Sync formatted lines to the RFQ textarea
-            const formattedLines = bomQueue.map((item, i) => `${i + 1}. [QTY: ${item.qty}] ${item.sku} (${item.code})`).join('\n');
-            rfqTextarea.value = formattedLines;
-        }
-
-        function addPresetSku(skuName, code, defaultQty) {
-            const existing = bomQueue.find(item => item.sku === skuName);
-            if (existing) {
-                existing.qty += defaultQty;
-            } else {
-                bomQueue.push({ sku: skuName, code: code, qty: defaultQty });
-            }
-            renderBomQueue();
-            showToast(`Added (${defaultQty}x) ${skuName} to active RFQ.`);
-        }
-
-        function addCustomSkuFromTerminal() {
-            const input = document.getElementById('custom-sku-input');
-            const qtyInput = document.getElementById('custom-sku-qty');
-            const skuVal = input.value.trim();
-            const qtyVal = parseInt(qtyInput.value, 10) || 1;
-
-            if (!skuVal) {
-                input.focus();
-                return;
-            }
-
-            bomQueue.push({
-                sku: skuVal,
-                code: 'CUSTOM-SKU',
-                qty: qtyVal
-            });
-            input.value = '';
-            renderBomQueue();
-            showToast(`Queued ${qtyVal}x "${skuVal}" to active BOM.`);
-        }
-
-        function removeBomItem(index) {
-            bomQueue.splice(index, 1);
-            renderBomQueue();
-        }
-
-        function clearBomQueue() {
-            bomQueue = [];
-            renderBomQueue();
-            showToast('Cleared active BOM staging queue.');
-        }
-
         // Broker Desk Mode Switcher (Buyers vs Sellers)
         function switchBrokerMode(mode) {
             const btnBuyers = document.getElementById('btn-mode-buyers');
@@ -1291,7 +1183,6 @@
 
         // Initialize on load
         window.onload = function() {
-            renderBomQueue();
             showSubmissionConfirmationFromRedirect();
         };
     </script>
