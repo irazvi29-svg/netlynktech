@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Netlynk Technologies Inc. | Enterprise IT Infrastructure, Wholesale Trading & RevOps Architecture</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23090D16'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='sans-serif' font-size='30' font-weight='700' fill='%232563EB'%3ENT%3C/text%3E%3C/svg%3E">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -910,7 +911,6 @@
                                 <i class="fa-solid fa-paper-plane text-xs"></i>
                             </button>
                         </div>
-                        <p id="intake-submit-status" class="hidden text-sm" role="status" aria-live="polite"></p>
                     </form>
 
                     <!-- Submission Confirmation (Hidden Initially) -->
@@ -1139,18 +1139,13 @@
             portalEl.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Send the inquiry directly to the trading desk through FormSubmit.
-        async function handlePortalSubmission(event) {
+        // Submit with a regular browser POST so the email provider does not require CORS.
+        function handlePortalSubmission(event) {
             event.preventDefault();
 
-            const form = event.currentTarget;
             const submitButton = document.getElementById('intake-submit-button');
-            const submitStatus = document.getElementById('intake-submit-status');
             const submitLabel = submitButton.querySelector('span');
-            submitStatus.classList.add('hidden');
-            submitStatus.textContent = '';
             submitButton.disabled = true;
-            submitButton.setAttribute('aria-busy', 'true');
             submitLabel.textContent = 'Sending...';
 
             const workflow = document.getElementById('active-workflow-type').value;
@@ -1212,55 +1207,56 @@
                 detailsBlock
             ].join('\n');
 
-            try {
-                const response = await fetch('https://formsubmit.co/ajax/imran@netlynktech.com', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        name,
-                        email,
-                        company,
-                        workflow,
-                        message,
-                        _subject: `[${workflow}] ${company} (${refId})`,
-                        _replyto: email
-                    })
-                });
-                const responseText = await response.text();
-                let result;
+            const returnUrl = new URL(window.location.href);
+            returnUrl.search = '';
+            returnUrl.searchParams.set('inquiry', 'sent');
+            returnUrl.searchParams.set('ref', refId);
+            returnUrl.hash = 'intake-portal';
 
-                try {
-                    result = JSON.parse(responseText);
-                } catch {
-                    throw new Error('The email service returned an unexpected response.');
-                }
+            const submissionForm = document.createElement('form');
+            submissionForm.method = 'POST';
+            submissionForm.action = 'https://formsubmit.co/imran@netlynktech.com';
 
-                if (!response.ok || (result.success !== true && result.success !== 'true')) {
-                    const providerMessage = typeof result.message === 'string' ? result.message.trim() : '';
-                    console.error('FormSubmit rejected the inquiry:', {
-                        status: response.status,
-                        message: providerMessage || 'No reason provided'
-                    });
-                    throw new Error(providerMessage || `The email service could not accept this inquiry (HTTP ${response.status}).`);
-                }
+            const fields = {
+                name,
+                email,
+                company,
+                workflow,
+                message,
+                _subject: `[${workflow}] ${company} (${refId})`,
+                _replyto: email,
+                _next: returnUrl.href,
+                _captcha: 'false'
+            };
 
-                document.getElementById('receipt-ref-id').textContent = `REF: ${refId}`;
-                form.classList.add('hidden');
-                document.getElementById('portal-receipt').classList.remove('hidden');
-                showToast('Your inquiry was sent to the trading desk.');
-            } catch (error) {
-                console.error('Inquiry submission failed:', error);
-                const reason = error instanceof Error ? error.message : 'Unexpected submission error.';
-                submitStatus.textContent = `We could not send your inquiry: ${reason} Please try again or email imran@netlynktech.com directly.`;
-                submitStatus.className = 'text-sm text-rose-600';
-            } finally {
-                submitButton.disabled = false;
-                submitButton.removeAttribute('aria-busy');
-                submitLabel.textContent = 'Send Inquiry';
+            Object.entries(fields).forEach(([fieldName, value]) => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = fieldName;
+                input.value = value;
+                submissionForm.appendChild(input);
+            });
+
+            document.body.appendChild(submissionForm);
+            submissionForm.submit();
+        }
+
+        function showSubmissionConfirmationFromRedirect() {
+            const currentUrl = new URL(window.location.href);
+            if (currentUrl.searchParams.get('inquiry') !== 'sent') {
+                return;
             }
+
+            const refId = currentUrl.searchParams.get('ref');
+            if (refId) {
+                document.getElementById('receipt-ref-id').textContent = `REF: ${refId}`;
+            }
+            document.getElementById('enterprise-intake-form').classList.add('hidden');
+            document.getElementById('portal-receipt').classList.remove('hidden');
+            currentUrl.searchParams.delete('inquiry');
+            currentUrl.searchParams.delete('ref');
+            window.history.replaceState({}, '', `${currentUrl.pathname}${currentUrl.hash}`);
+            showToast('Your inquiry was sent to the trading desk.');
         }
 
         function resetIntakePortal() {
@@ -1296,6 +1292,7 @@
         // Initialize on load
         window.onload = function() {
             renderBomQueue();
+            showSubmissionConfirmationFromRedirect();
         };
     </script>
 </body>
