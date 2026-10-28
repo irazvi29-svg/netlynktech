@@ -903,55 +903,36 @@
                         <div class="pt-3 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                             <div class="flex items-center space-x-2 text-xs text-slate-500 font-mono-tech">
                                 <i class="fa-solid fa-lock text-emeraldStatus"></i>
-                                <span>Direct Encrypted Routing • Zero Third-Party Broker Leakage</span>
+                                <span>Encrypted form submission • Delivered through FormSubmit</span>
                             </div>
-                            <button type="submit" class="bg-cobalt hover:bg-cobaltHover text-white font-semibold px-8 py-3.5 rounded-lg shadow-md transition flex items-center justify-center space-x-2 text-sm">
-                                <span>Generate Dispatch & Submit</span>
+                            <button id="intake-submit-button" type="submit" class="bg-cobalt hover:bg-cobaltHover text-white font-semibold px-8 py-3.5 rounded-lg shadow-md transition flex items-center justify-center space-x-2 text-sm">
+                                <span>Send Inquiry</span>
                                 <i class="fa-solid fa-paper-plane text-xs"></i>
                             </button>
                         </div>
+                        <p id="intake-submit-status" class="hidden text-sm" role="status" aria-live="polite"></p>
                     </form>
 
-                    <!-- Submission Confirmation & Dispatch Receipt (Hidden Initially) -->
-                    <div id="portal-receipt" class="hidden space-y-6">
+                    <!-- Submission Confirmation (Hidden Initially) -->
+                    <div id="portal-receipt" class="hidden">
                         <div class="bg-emerald-50/70 border border-emerald-200 rounded-xl p-5 flex items-start space-x-4">
                             <div class="w-10 h-10 rounded-lg bg-emeraldStatus text-white flex items-center justify-center text-lg shrink-0 mt-0.5">
                                 <i class="fa-solid fa-check"></i>
                             </div>
                             <div class="flex-1">
                                 <div class="flex flex-wrap items-center justify-between gap-2">
-                                    <h4 class="text-base font-bold text-slateDark">Dispatch Packet Generated & Logged</h4>
+                                    <h4 class="text-base font-bold text-slateDark">Inquiry sent to the trading desk</h4>
                                     <span id="receipt-ref-id" class="text-xs font-mono-tech font-bold px-2.5 py-1 rounded bg-slateDark text-white">REF: NLK-2026-8419</span>
                                 </div>
                                 <p class="text-xs text-slate-600 mt-1">
-                                    Your structured inquiry is ready for immediate trading desk review. Copy the packet below or click <strong>Open Direct Email Dispatch</strong> to send directly from your mail client to <span class="font-mono-tech text-slateDark">imran@netlynktech.com</span>.
+                                    Your inquiry has been emailed to <span class="font-mono-tech text-slateDark">imran@netlynktech.com</span>. We’ll follow up using the email address you provided.
                                 </p>
                             </div>
                         </div>
-
-                        <!-- Formatted Dispatch Packet Preview -->
-                        <div class="bg-obsidian text-slate-200 rounded-xl p-5 border border-slate-800">
-                            <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
-                                <span class="text-xs font-mono-tech text-slate-400">STRUCTURED DISPATCH PAYLOAD</span>
-                                <div class="flex items-center space-x-2">
-                                    <button onclick="copyDispatchPayload()" class="text-xs font-mono-tech bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1 rounded border border-slate-700 transition">
-                                        <i class="fa-regular fa-copy mr-1"></i>Copy Text
-                                    </button>
-                                    <button onclick="downloadDispatchPayload()" class="text-xs font-mono-tech bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1 rounded border border-slate-700 transition">
-                                        <i class="fa-solid fa-download mr-1"></i>Download .TXT
-                                    </button>
-                                </div>
-                            </div>
-                            <pre id="receipt-payload-text" class="text-xs font-mono-tech text-emeraldStatus whitespace-pre-wrap leading-relaxed max-h-60 overflow-y-auto terminal-scroll"></pre>
-                        </div>
-
                         <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
                             <button onclick="resetIntakePortal()" class="w-full sm:w-auto text-xs font-mono-tech text-slate-600 hover:text-slateDark px-4 py-2.5 border border-slate-300 rounded-lg transition">
                                 &larr; Submit Another Inquiry
                             </button>
-                            <a id="receipt-mailto-link" href="mailto:imran@netlynktech.com" class="w-full sm:w-auto bg-cobalt hover:bg-cobaltHover text-white text-xs font-mono-tech font-semibold px-6 py-3 rounded-lg text-center transition shadow-sm">
-                                <i class="fa-regular fa-envelope mr-1.5"></i>Open Direct Email Dispatch (imran@netlynktech.com)
-                            </a>
                         </div>
                     </div>
 
@@ -1158,12 +1139,19 @@
             portalEl.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Handle Form Submission & Generate Structured Dispatch Packet
-        let lastGeneratedPayload = '';
-        let lastGeneratedRef = '';
-
-        function handlePortalSubmission(event) {
+        // Send the inquiry directly to the trading desk through FormSubmit.
+        async function handlePortalSubmission(event) {
             event.preventDefault();
+
+            const form = event.currentTarget;
+            const submitButton = document.getElementById('intake-submit-button');
+            const submitStatus = document.getElementById('intake-submit-status');
+            const submitLabel = submitButton.querySelector('span');
+            submitStatus.classList.add('hidden');
+            submitStatus.textContent = '';
+            submitButton.disabled = true;
+            submitButton.setAttribute('aria-busy', 'true');
+            submitLabel.textContent = 'Sending...';
 
             const workflow = document.getElementById('active-workflow-type').value;
             const name = document.getElementById('intake-name').value.trim();
@@ -1172,9 +1160,6 @@
 
             const randomDigits = Math.floor(1000 + Math.random() * 9000);
             const refId = `NLK-2026-${randomDigits}`;
-            lastGeneratedRef = refId;
-
-            const timestamp = new Date().toISOString().split('T')[0];
 
             let detailsBlock = '';
             if (workflow === 'Hardware RFQ') {
@@ -1184,11 +1169,10 @@
                 const bomText = document.getElementById('rfq-bom-textarea').value.trim() || 'No specific SKUs listed.';
 
                 detailsBlock = [
-                    `CONDITION PREFERENCE : ${condition}`,
-                    `TARGET URGENCY       : ${urgency}`,
-                    `LOGISTICS / CURRENCY : ${logistics}`,
-                    `------------------------------------------------------------`,
-                    `REQUESTED BILL OF MATERIALS (BOM):`,
+                    `Hardware condition: ${condition}`,
+                    `Fulfillment urgency: ${urgency}`,
+                    `Settlement and shipping: ${logistics}`,
+                    `Requested bill of materials:`,
                     bomText
                 ].join('\n');
             } else if (workflow === 'Broker Stock List (WTS)') {
@@ -1198,11 +1182,10 @@
                 const stockText = document.getElementById('wts-stock-textarea').value.trim() || 'Stock list inquiry.';
 
                 detailsBlock = [
-                    `PARTNER CLASSIFICATION : ${partnerType}`,
-                    `FOB WAREHOUSE LOCATION : ${fob}`,
-                    `PRIMARY STOCK CATEGORY : ${cat}`,
-                    `------------------------------------------------------------`,
-                    `ACTIVE INVENTORY / WTS DETAILS:`,
+                    `Partner classification: ${partnerType}`,
+                    `FOB warehouse location: ${fob}`,
+                    `Primary stock category: ${cat}`,
+                    `Active inventory / stock list:`,
                     stockText
                 ].join('\n');
             } else {
@@ -1211,70 +1194,78 @@
                 const notes = document.getElementById('revops-notes-textarea').value.trim() || 'Consultation requested.';
 
                 detailsBlock = [
-                    `ARCHITECTURE SCOPE : ${scope}`,
-                    `CURRENT TECH STACK : ${stack}`,
-                    `------------------------------------------------------------`,
-                    `PROJECT OBJECTIVES & BOTTLENECKS:`,
+                    `Architecture scope: ${scope}`,
+                    `Current technology stack: ${stack}`,
+                    `Project objectives and bottlenecks:`,
                     notes
                 ].join('\n');
             }
 
-            const payload = [
-                `============================================================`,
-                `NETLYNK TECHNOLOGIES INC. // TRADING & INTAKE DISPATCH`,
-                `============================================================`,
-                `REFERENCE ID : ${refId}`,
-                `DATE         : ${timestamp}`,
-                `WORKFLOW     : ${workflow}`,
-                `CONTACT NAME : ${name}`,
-                `COMPANY      : ${company}`,
-                `EMAIL        : ${email}`,
-                `------------------------------------------------------------`,
-                detailsBlock,
-                `============================================================`
+            const message = [
+                `New ${workflow} inquiry`,
+                `Reference: ${refId}`,
+                '',
+                `Name: ${name}`,
+                `Company: ${company}`,
+                `Email: ${email}`,
+                '',
+                detailsBlock
             ].join('\n');
 
-            lastGeneratedPayload = payload;
+            try {
+                const response = await fetch('https://formsubmit.co/ajax/imran@netlynktech.com', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name,
+                        email,
+                        company,
+                        workflow,
+                        message,
+                        _subject: `[${workflow}] ${company} (${refId})`,
+                        _replyto: email
+                    })
+                });
+                const responseText = await response.text();
+                let result;
 
-            // Update Receipt UI
-            document.getElementById('receipt-ref-id').textContent = `REF: ${refId}`;
-            document.getElementById('receipt-payload-text').textContent = payload;
+                try {
+                    result = JSON.parse(responseText);
+                } catch {
+                    throw new Error('The email service returned an unexpected response.');
+                }
 
-            const mailtoSubject = encodeURIComponent(`[${refId}] ${workflow} - ${company}`);
-            const mailtoBody = encodeURIComponent(payload);
-            document.getElementById('receipt-mailto-link').href = `mailto:imran@netlynktech.com?subject=${mailtoSubject}&body=${mailtoBody}`;
+                if (!response.ok || (result.success !== true && result.success !== 'true')) {
+                    const providerMessage = typeof result.message === 'string' ? result.message.trim() : '';
+                    console.error('FormSubmit rejected the inquiry:', {
+                        status: response.status,
+                        message: providerMessage || 'No reason provided'
+                    });
+                    throw new Error(providerMessage || `The email service could not accept this inquiry (HTTP ${response.status}).`);
+                }
 
-            document.getElementById('enterprise-intake-form').classList.add('hidden');
-            document.getElementById('portal-receipt').classList.remove('hidden');
-            showToast(`Dispatch ${refId} generated.`);
+                document.getElementById('receipt-ref-id').textContent = `REF: ${refId}`;
+                form.classList.add('hidden');
+                document.getElementById('portal-receipt').classList.remove('hidden');
+                showToast('Your inquiry was sent to the trading desk.');
+            } catch (error) {
+                console.error('Inquiry submission failed:', error);
+                const reason = error instanceof Error ? error.message : 'Unexpected submission error.';
+                submitStatus.textContent = `We could not send your inquiry: ${reason} Please try again or email imran@netlynktech.com directly.`;
+                submitStatus.className = 'text-sm text-rose-600';
+            } finally {
+                submitButton.disabled = false;
+                submitButton.removeAttribute('aria-busy');
+                submitLabel.textContent = 'Send Inquiry';
+            }
         }
 
         function resetIntakePortal() {
             document.getElementById('portal-receipt').classList.add('hidden');
             document.getElementById('enterprise-intake-form').classList.remove('hidden');
-        }
-
-        function copyDispatchPayload() {
-            const tempArea = document.createElement('textarea');
-            tempArea.value = lastGeneratedPayload;
-            document.body.appendChild(tempArea);
-            tempArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempArea);
-            showToast('Dispatch packet copied to clipboard.');
-        }
-
-        function downloadDispatchPayload() {
-            const blob = new Blob([lastGeneratedPayload], { type: 'text/plain;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `${lastGeneratedRef || 'NETLYNK-DISPATCH'}.txt`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-            showToast('Downloaded dispatch .TXT file.');
         }
 
         // Mobile Navigation Drawer Toggle
