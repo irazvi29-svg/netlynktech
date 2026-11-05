@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0f19">
+  <meta name="description" content="Strategic enterprise hardware and lifecycle procurement from Netlynk Technologies. Architect-verified networking, security, optical, and compute supply across Canada and the US.">
+  <title>Enterprise Hardware Procurement | Netlynk Technologies</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind = {
+      config: {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace']
+            },
+            colors: {
+              midnight: '#0B0F19',
+              surface: '#111827',
+              electric: '#2563EB'
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: Inter, sans-serif;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    [hidden] { display: none !important; }
+    body {
+      background-color: #0b0f19;
+      background-image: radial-gradient(ellipse at 75% 4%, rgb(37 99 235 / 14%), transparent 31rem);
+    }
+    a, button, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+      outline: 2px solid #60a5fa;
+      outline-offset: 3px;
+    }
+    .section-anchor { scroll-margin-top: 6rem; }
+    .hero-glow {
+      background:
+        radial-gradient(ellipse at 75% 28%, rgb(37 99 235 / 10%), transparent 34rem),
+        radial-gradient(ellipse at 12% 0%, rgb(30 64 175 / 10%), transparent 28rem);
+    }
+    .field-control {
+      width: 100%;
+      border: 1px solid #334155;
+      border-radius: .5rem;
+      background: #0b1220;
+      color: #e2e8f0;
+      padding: .8rem .9rem;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+    .field-control:focus { border-color: #3b82f6; outline: 0; box-shadow: 0 0 0 3px rgb(37 99 235 / 18%); }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto !important; }
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body class="bg-midnight font-sans text-slate-200 antialiased">
+  <header class="sticky top-0 z-50 border-b border-slate-800/80 bg-[#0b0f19]/85 backdrop-blur-xl">
+    <div class="mx-auto flex min-h-[72px] max-w-7xl items-center justify-between gap-5 px-5 sm:px-8">
+      <a class="flex shrink-0 items-center gap-3" href="index.html" aria-label="Netlynk Technologies home">
+        <span class="relative grid h-9 w-9 place-items-center rounded-xl border border-blue-400/30 bg-blue-500/10 text-blue-300">
+          <i data-lucide="network" class="h-[19px] w-[19px]" aria-hidden="true"></i>
+        </span>
+        <span class="leading-tight">
+          <span class="block text-sm font-bold tracking-[.13em] text-white">NETLYNK</span>
+          <span class="mt-1 block font-mono text-[9px] tracking-[.2em] text-slate-400">TECHNOLOGIES</span>
+        </span>
+      </a>
+
+      <nav id="primary-navigation" class="absolute inset-x-0 top-[71px] hidden border-b border-slate-800 bg-[#0b0f19] px-5 pb-5 pt-2 md:static md:flex md:items-center md:gap-8 md:border-0 md:bg-transparent md:p-0" aria-label="Main navigation">
+        <a class="block py-3 text-sm text-slate-400 transition hover:text-white md:py-2" href="index.html#solutions">Solutions</a>
+        <a class="block py-3 text-sm text-slate-400 transition hover:text-white md:py-2" href="index.html#process">How We Work</a>
+        <a class="block py-3 text-sm text-slate-400 transition hover:text-white md:py-2" href="index.html#models">Engagement Models</a>
+        <a class="block py-3 text-sm text-blue-300 transition hover:text-white md:py-2" href="hardware.html" aria-current="page">Hardware Procurement</a>
+      </nav>
+
+      <div class="flex shrink-0 items-center gap-3">
+        <a class="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-2.5 py-2.5 text-xs font-semibold text-white shadow-lg shadow-blue-950/30 transition hover:bg-blue-500 sm:gap-2 sm:px-4 sm:text-sm" href="#quote-form">
+          <span class="sm:hidden">Request Quote</span>
+          <span class="hidden sm:inline">Submit a BOM / Request Quote</span>
+          <i data-lucide="arrow-up-right" class="h-4 w-4" aria-hidden="true"></i>
+        </a>
+        <button class="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-800 text-slate-300 md:hidden" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="primary-navigation">
+          <i data-lucide="menu" class="h-5 w-5" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero-glow relative overflow-hidden">
+      <div class="mx-auto grid max-w-7xl items-center gap-14 px-5 pb-20 pt-16 sm:px-8 sm:pb-24 sm:pt-24 lg:grid-cols-[1.05fr_.95fr] lg:gap-14 lg:py-28">
+        <div class="relative z-10">
+          <p class="mb-7 inline-flex items-center gap-2 rounded-full border border-blue-400/20 bg-blue-500/[.07] px-3.5 py-2 font-mono text-[10px] leading-relaxed tracking-[.11em] text-blue-200 sm:text-[11px]">
+            <span class="h-1.5 w-1.5 rounded-full bg-blue-400 shadow-[0_0_12px_#60a5fa]"></span>
+            AUTHORIZED DISTRIBUTION &amp; INFRASTRUCTURE SUPPLY
+          </p>
+          <h1 class="max-w-3xl text-[2.8rem] font-semibold leading-[1.06] tracking-[-.065em] text-white sm:text-6xl lg:text-[4.1rem]">
+            Turnkey Enterprise Hardware, <span class="bg-gradient-to-r from-blue-300 to-cyan-200 bg-clip-text text-transparent">Engineered for Your Architecture.</span>
+          </h1>
+          <p class="mt-7 max-w-2xl text-base leading-7 text-slate-400 sm:text-lg sm:leading-8">
+            We source commercial networking, security, server, and optical infrastructure directly through tier-1 North American distribution channels—ensuring every component matches your architectural blueprint.
+          </p>
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a class="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 text-sm font-semibold text-white shadow-lg shadow-blue-950/30 transition hover:bg-blue-500" href="#quote-form">
+              Submit a BOM / Request Quote
+              <i data-lucide="arrow-right" class="h-4 w-4" aria-hidden="true"></i>
+            </a>
+            <a class="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-slate-700 bg-slate-900/40 px-5 text-sm font-semibold text-slate-200 transition hover:border-slate-500 hover:bg-slate-800/70" href="#supply-categories">
+              Explore Supply Categories
+              <i data-lucide="move-down" class="h-4 w-4" aria-hidden="true"></i>
+            </a>
+          </div>
+          <div class="mt-10 flex flex-wrap gap-x-6 gap-y-3 border-t border-slate-800 pt-6 text-xs text-slate-400">
+            <span class="inline-flex items-center gap-2"><i data-lucide="shield-check" class="h-4 w-4 text-blue-300" aria-hidden="true"></i>Architect-verified sourcing</span>
+            <span class="inline-flex items-center gap-2"><i data-lucide="map-pin" class="h-4 w-4 text-blue-300" aria-hidden="true"></i>Canada &amp; US supply</span>
+          </div>
+        </div>
+
+        <aside class="relative mx-auto w-full max-w-[560px]" aria-label="Enterprise infrastructure procurement overview">
+          <div class="absolute -inset-5 rounded-[2rem] bg-blue-600/10 blur-3xl"></div>
+          <div class="relative overflow-hidden rounded-2xl border border-slate-700/80 bg-[#0d1422]/95 p-6 shadow-2xl shadow-black/40 sm:p-8">
+            <div class="flex items-start justify-between gap-4 border-b border-slate-800 pb-5">
+              <div>
+                <p class="font-mono text-[10px] tracking-[.14em] text-blue-300">INFRASTRUCTURE SUPPLY</p>
+                <h2 class="mt-2 text-lg font-semibold text-white">Your blueprint, sourced.</h2>
+              </div>
+              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-blue-400/20 bg-blue-500/10 text-blue-300"><i data-lucide="boxes" class="h-5 w-5" aria-hidden="true"></i></span>
+            </div>
+            <div class="my-6 space-y-3">
+              <div class="flex items-center gap-3 rounded-xl border border-slate-800 bg-slate-900/70 p-3.5">
+                <span class="grid h-9 w-9 place-items-center rounded-lg bg-blue-500/10 text-blue-300"><i data-lucide="network" class="h-[18px] w-[18px]" aria-hidden="true"></i></span>
+                <div><p class="text-sm font-medium text-slate-100">Network &amp; security</p><p class="mt-1 text-xs text-slate-500">Switching, routing, firewall</p></div>
+              </div>
+              <div class="flex items-center gap-3 rounded-xl border border-slate-800 bg-slate-900/70 p-3.5">
+                <span class="grid h-9 w-9 place-items-center rounded-lg bg-cyan-500/10 text-cyan-300"><i data-lucide="cable" class="h-[18px] w-[18px]" aria-hidden="true"></i></span>
+                <div><p class="text-sm font-medium text-slate-100">Optical &amp; interconnect</p><p class="mt-1 text-xs text-slate-500">Transceivers, fiber, rack distribution</p></div>
+              </div>
+              <div class="flex items-center gap-3 rounded-xl border border-slate-800 bg-slate-900/70 p-3.5">
+                <span class="grid h-9 w-9 place-items-center rounded-lg bg-violet-500/10 text-violet-300"><i data-lucide="server" class="h-[18px] w-[18px]" aria-hidden="true"></i></span>
+                <div><p class="text-sm font-medium text-slate-100">Compute &amp; lifecycle</p><p class="mt-1 text-xs text-slate-500">Servers, storage, UPS protection</p></div>
+              </div>
+            </div>
+            <p class="flex items-center gap-2 border-t border-slate-800 pt-4 font-mono text-[9px] tracking-[.08em] text-slate-500 sm:text-[10px]">
+              <i data-lucide="check-circle-2" class="h-4 w-4 text-emerald-400" aria-hidden="true"></i>
+              VERIFIED AGAINST YOUR ARCHITECTURE
+            </p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="border-y border-slate-800/80 bg-slate-950/30 px-5 py-20 sm:px-8 sm:py-24" id="supply-categories">
+      <div class="mx-auto max-w-7xl">
+        <div class="mb-12 max-w-2xl sm:mb-14">
+          <p class="mb-4 font-mono text-[10px] tracking-[.16em] text-blue-300">SUPPLY CATEGORIES</p>
+          <h2 class="text-3xl font-semibold tracking-[-.055em] text-white sm:text-5xl">Infrastructure that fits your environment.</h2>
+          <p class="mt-5 max-w-xl leading-7 text-slate-400">Commercial-grade equipment sourced to align with your design, deployment requirements, and lifecycle plan.</p>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <article class="rounded-2xl border border-slate-800 bg-surface p-6 transition hover:border-slate-700 sm:p-7">
+            <span class="grid h-11 w-11 place-items-center rounded-xl border border-blue-400/15 bg-blue-500/10 text-blue-300"><i data-lucide="network" class="h-5 w-5" aria-hidden="true"></i></span>
+            <h3 class="mt-6 text-lg font-semibold tracking-tight text-white">Enterprise Networking &amp; Switching</h3>
+            <p class="mt-3 text-sm leading-6 text-slate-400">Managed Layer-2/Layer-3 switches, enterprise Wi-Fi access points, and core routing hardware.</p>
+          </article>
+          <article class="rounded-2xl border border-slate-800 bg-surface p-6 transition hover:border-slate-700 sm:p-7">
+            <span class="grid h-11 w-11 place-items-center rounded-xl border border-rose-400/15 bg-rose-500/10 text-rose-300"><i data-lucide="shield" class="h-5 w-5" aria-hidden="true"></i></span>
+            <h3 class="mt-6 text-lg font-semibold tracking-tight text-white">Network Security &amp; Firewalls</h3>
+            <p class="mt-3 text-sm leading-6 text-slate-400">Next-gen firewalls, VPN appliances, and secure branch connectivity hardware.</p>
+          </article>
+          <article class="rounded-2xl border border-slate-800 bg-surface p-6 transition hover:border-slate-700 sm:p-7">
+            <span class="grid h-11 w-11 place-items-center rounded-xl border border-cyan-400/15 bg-cyan-500/10 text-cyan-300"><i data-lucide="cable" class="h-5 w-5" aria-hidden="true"></i></span>
+            <h3 class="mt-6 text-lg font-semibold tracking-tight text-white">Optical Transceivers &amp; Interconnects</h3>
+            <p class="mt-3 text-sm leading-6 text-slate-400">High-speed SFP+, QSFP28, fiber patch cabling, and rack distribution units.</p>
+          </article>
+          <article class="rounded-2xl border border-slate-800 bg-surface p-6 transition hover:border-slate-700 sm:p-7">
+            <span class="grid h-11 w-11 place-items-center rounded-xl border border-violet-400/15 bg-violet-500/10 text-violet-300"><i data-lucide="server" class="h-5 w-5" aria-hidden="true"></i></span>
+            <h3 class="mt-6 text-lg font-semibold tracking-tight text-white">Server &amp; Compute Infrastructure</h3>
+            <p class="mt-3 text-sm leading-6 text-slate-400">Rackmount servers, enterprise storage arrays, and UPS power protection.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="px-5 py-20 sm:px-8 sm:py-24">
+      <div class="mx-auto max-w-7xl">
+        <div class="mb-12 max-w-2xl">
+          <p class="mb-4 font-mono text-[10px] tracking-[.16em] text-blue-300">A TECHNICAL PROCUREMENT PARTNER</p>
+          <h2 class="text-3xl font-semibold tracking-[-.055em] text-white sm:text-4xl">Why Procure Through Netlynk</h2>
+        </div>
+        <div class="grid gap-8 md:grid-cols-3 md:gap-10">
+          <article class="border-t border-slate-700 pt-5">
+            <span class="grid h-10 w-10 place-items-center rounded-lg border border-blue-400/15 bg-blue-500/10 text-blue-300"><i data-lucide="badge-check" class="h-5 w-5" aria-hidden="true"></i></span>
+            <h3 class="mt-5 text-lg font-semibold text-white">Architect-Verified BOMs</h3>
+            <p class="mt-3 text-sm leading-6 text-slate-400">We verify part compatibility before you buy, helping ensure the components fit your intended design.</p>
+          </article>
+          <article class="border-t border-slate-700 pt-5">
+            <span class="grid h-10 w-10 place-items-center rounded-lg border border-blue-400/15 bg-blue-500/10 text-blue-300"><i data-lucide="globe-2" class="h-5 w-5" aria-hidden="true"></i></span>
+            <h3 class="mt-5 text-lg font-semibold text-white">Tier-1 Distribution Sourcing</h3>
+            <p class="mt-3 text-sm leading-6 text-slate-400">We work with direct authorized supply chains across Canada and the US to source commercial infrastructure.</p>
+          </article>
+          <article class="border-t border-slate-700 pt-5">
+            <span class="grid h-10 w-10 place-items-center rounded-lg border border-blue-400/15 bg-blue-500/10 text-blue-300"><i data-lucide="workflow" class="h-5 w-5" aria-hidden="true"></i></span>
+            <h3 class="mt-5 text-lg font-semibold text-white">Consolidated Deployment</h3>
+            <p class="mt-3 text-sm leading-6 text-slate-400">Hardware is pre-staged to match your cloud and network consulting roadmap, helping keep procurement aligned with deployment.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-anchor border-t border-slate-800 bg-[#0d1422] px-5 py-20 sm:px-8 sm:py-28" id="quote-form">
+      <div class="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[.8fr_1.2fr] lg:gap-20">
+        <div class="pt-1">
+          <p class="mb-4 font-mono text-[10px] tracking-[.16em] text-blue-300">FAST-TRACK BOM / RFQ</p>
+          <h2 class="max-w-xl text-3xl font-semibold leading-tight tracking-[-.055em] text-white sm:text-5xl">Start with your requirements.</h2>
+          <p class="mt-5 max-w-lg text-base leading-7 text-slate-400">Send your bill of materials, part numbers, or infrastructure requirements. Our team will review your request and follow up about availability and next steps.</p>
+          <div class="mt-9 space-y-5 border-t border-slate-800 pt-6">
+            <p class="flex items-center gap-3 text-sm text-slate-300"><i data-lucide="map-pin" class="h-[18px] w-[18px] text-blue-300" aria-hidden="true"></i>Calgary, Alberta, Canada</p>
+            <a class="flex items-center gap-3 text-sm text-slate-300 transition hover:text-white" href="mailto:sales@netlynktech.com"><i data-lucide="mail" class="h-[18px] w-[18px] text-blue-300" aria-hidden="true"></i>sales@netlynktech.com</a>
+          </div>
+        </div>
+
+        <form class="rounded-2xl border border-slate-800 bg-surface p-5 sm:p-8" id="hardware-quote-form" action="https://formsubmit.co/sales@netlynktech.com" method="POST">
+          <input type="hidden" name="_subject" value="New Enterprise Hardware BOM / Quote Request — Netlynk Technologies">
+          <input type="hidden" name="_next" value="https://netlynktech.com/hardware.html?inquiry=sent#quote-form">
+          <input type="hidden" name="_captcha" value="false">
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label class="mb-2 block text-xs font-medium text-slate-300" for="quote-name">Name</label>
+              <input class="field-control text-sm" id="quote-name" name="name" type="text" autocomplete="name" required>
+            </div>
+            <div>
+              <label class="mb-2 block text-xs font-medium text-slate-300" for="quote-email">Work Email</label>
+              <input class="field-control text-sm" id="quote-email" name="email" type="email" autocomplete="email" required>
+            </div>
+            <div class="sm:col-span-2">
+              <label class="mb-2 block text-xs font-medium text-slate-300" for="quote-company">Company</label>
+              <input class="field-control text-sm" id="quote-company" name="company" type="text" autocomplete="organization" required>
+            </div>
+            <div class="sm:col-span-2">
+              <label class="mb-2 block text-xs font-medium text-slate-300" for="quote-bom">Part Numbers / BOM Details</label>
+              <textarea class="field-control min-h-36 resize-y text-sm" id="quote-bom" name="part_numbers_and_bom_details" required></textarea>
+            </div>
+            <div class="sm:col-span-2">
+              <label class="mb-2 block text-xs font-medium text-slate-300" for="quote-timeline">Required Delivery Timeline</label>
+              <select class="field-control text-sm" id="quote-timeline" name="required_delivery_timeline" required>
+                <option value="" selected disabled>Select a delivery timeline</option>
+                <option>As soon as available</option>
+                <option>Within 2 weeks</option>
+                <option>Within 30 days</option>
+                <option>Within 60 days</option>
+                <option>Flexible / planning ahead</option>
+              </select>
+            </div>
+            <div class="flex flex-col gap-4 sm:col-span-2 sm:flex-row sm:items-center">
+              <button class="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 text-sm font-semibold text-white transition hover:bg-blue-500 sm:w-auto" type="submit">Submit BOM / Request Quote<i data-lucide="arrow-right" class="h-4 w-4" aria-hidden="true"></i></button>
+              <p class="text-xs leading-5 text-slate-500">Your request is sent to sales@netlynktech.com.</p>
+            </div>
+          </div>
+        </form>
+        <p class="hidden rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-5 text-sm leading-6 text-emerald-200 lg:col-start-2" id="form-success" role="status">Thanks for reaching out. Your hardware quote request has been received.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-800 bg-[#090d15] px-5 py-8 sm:px-8">
+    <div class="mx-auto flex max-w-7xl flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+      <a class="flex items-center gap-3" href="index.html" aria-label="Netlynk Technologies home">
+        <span class="grid h-8 w-8 place-items-center rounded-lg border border-blue-400/25 bg-blue-500/10 text-blue-300"><i data-lucide="network" class="h-4 w-4" aria-hidden="true"></i></span>
+        <span class="text-sm font-bold tracking-[.11em] text-white">NETLYNK <span class="font-mono text-[9px] font-normal tracking-[.14em] text-slate-500">TECHNOLOGIES</span></span>
+      </a>
+      <nav class="flex flex-wrap gap-x-6 gap-y-3 text-xs text-slate-400" aria-label="Footer navigation">
+        <a class="transition hover:text-white" href="index.html#solutions">Solutions</a>
+        <a class="transition hover:text-white" href="index.html#models">Engagement Models</a>
+        <a class="transition text-blue-300 hover:text-white" href="hardware.html" aria-current="page">Hardware Procurement</a>
+        <a class="transition hover:text-white" href="mailto:sales@netlynktech.com">Email Us</a>
+      </nav>
+      <p class="max-w-xl text-xs leading-5 text-slate-500">© 2026 Netlynk Technologies Inc. All rights reserved. Headquartered in Calgary, AB, Canada.</p>
+    </div>
+  </footer>
+
+  <script>
+    const menuToggle = document.querySelector('[aria-controls="primary-navigation"]');
+    const navigation = document.querySelector('#primary-navigation');
+
+    menuToggle.addEventListener('click', () => {
+      const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+      menuToggle.setAttribute('aria-expanded', String(!isExpanded));
+      menuToggle.setAttribute('aria-label', isExpanded ? 'Open navigation' : 'Close navigation');
+      navigation.classList.toggle('hidden', isExpanded);
+    });
+
+    navigation.addEventListener('click', (event) => {
+      if (event.target instanceof HTMLAnchorElement && window.matchMedia('(max-width: 767px)').matches) {
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', 'Open navigation');
+        navigation.classList.add('hidden');
+      }
+    });
+
+    const pageUrl = new URL(window.location.href);
+    if (pageUrl.searchParams.get('inquiry') === 'sent') {
+      document.querySelector('#hardware-quote-form').hidden = true;
+      document.querySelector('#form-success').classList.remove('hidden');
+      pageUrl.searchParams.delete('inquiry');
+      window.history.replaceState({}, '', `${pageUrl.pathname}${pageUrl.hash}`);
+    }
+
+    lucide.createIcons();
+  </script>
+</body>
+</html>
